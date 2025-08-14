@@ -155,8 +155,8 @@ st.set_page_config(page_title="CBR250RR A/F Analyser", layout="wide")
 st.title("CBR250RR A/F Analyser")
 
 with st.sidebar:
-    st.header("1) CSVを読み込み")
-    uploaded = st.file_uploader("CSVファイルを選択（先頭6行スキップを想定）", type=["csv"])
+    st.header("1) CSVを選択")
+    uploaded = st.file_uploader("csvを無編集アップロードすること", type=["csv"])
     if uploaded:
         try:
             st.session_state.df = pd.read_csv(uploaded, skiprows=6)
@@ -226,7 +226,7 @@ else:
                      width=1600,
                      height=460)
 
-        st.subheader("A/F補正値グリッド")
+        st.subheader("A/F補正値")
         st.dataframe(style_correction_dataframe(st.session_state.heatmap),
                      width=1600,
                      height=460)
