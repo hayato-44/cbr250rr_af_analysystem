@@ -152,11 +152,12 @@ def df_to_csv_download(df_vals: np.ndarray, name: str) -> bytes:
 
 # ====== レイアウト ======
 st.set_page_config(page_title="CBR250RR A/F Analyser", layout="wide")
-st.title("CBR250RR A/F Analyser")
+st.title("CBR250RR A/F 解析ツール")
+st.write("")  
 
 with st.sidebar:
-    st.header("1) CSVを選択")
-    uploaded = st.file_uploader("csvを無編集アップロードすること", type=["csv"])
+    st.header("1. CSVを選択")
+    uploaded = st.file_uploader("MBDAデータからCSVを書き出して無編集でアップロードすること", type=["csv"])
     if uploaded:
         try:
             st.session_state.df = pd.read_csv(uploaded, skiprows=6)
@@ -166,7 +167,7 @@ with st.sidebar:
             st.error(f"CSVの読み込みに失敗しました: {e}")
 
     st.markdown("---")
-    st.header("2) ラップ選択")
+    st.header("2. 解析ラップ選択")
     target_lap = None
     if st.session_state.df is not None and "Lap" in st.session_state.df.columns:
         options = ["All"] + [str(int(l)) for l in laps]
@@ -176,12 +177,12 @@ with st.sidebar:
         st.info("Lap列が無い場合は自動的に全データを対象にします。")
 
     st.markdown("---")
-    st.header("3) センサー選択 & 解析")
+    st.header("3. 解析気筒選択")
     col1, col2 = st.columns(2)
     with col1:
-        run_laf1 = st.button("LAF1解析を実行")
+        run_laf1 = st.button("LAF1を解析")
     with col2:
-        run_laf2 = st.button("LAF2解析を実行")
+        run_laf2 = st.button("LAF2を解析")
 
 # ====== 解析ロジック ======
 if st.session_state.df is None:
